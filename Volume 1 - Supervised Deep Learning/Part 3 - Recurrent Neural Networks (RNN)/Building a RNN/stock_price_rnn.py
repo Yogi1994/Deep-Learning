@@ -27,3 +27,56 @@ X_train, y_train = np.array(X_train), np.array(y_train)
 
 # Reshaping 
 X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
+
+
+# Part 2 - Building RNN
+
+# Importing keras libraries and packages
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import LSTM
+from keras.layers import Dropout
+
+# Initializing rnn regressor
+
+regressor = Sequential()
+
+# Adding the first LSTM layer and some dropout regularization
+regressor.add(LSTM(units=50, return_sequences = True, input_shape = (X_train.shape[1], 1)))
+regressor.add(Dropout(0.2))
+
+# Adding the second LSTM layer and some dropout regularization
+regressor.add(LSTM(units=50, return_sequences = True))
+regressor.add(Dropout(0.2))
+
+# Adding the third LSTM layer and some dropout regularization
+regressor.add(LSTM(units=50, return_sequences = True))
+regressor.add(Dropout(0.2))
+
+# Adding the fourth LSTM layer and some dropout regularization
+regressor.add(LSTM(units=50))
+regressor.add(Dropout(0.2))
+
+# Adding the output layer
+regressor.add(Dense(units=1))
+
+# Compiling RNN
+regressor.compile(optimizer = 'adam', loss='mean_squared_error')
+
+# Fitting the RNN to traning set
+regressor.fit(X_train, y_train, epochs = 100, batch_size = 32)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
